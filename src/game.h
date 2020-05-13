@@ -21,8 +21,9 @@ class Game{
     bool GameOver(Starfield * starfield);
 
   private:
-    Controller * _controller;
     Player * _player;
+    Starfield * _starfield;
+    Controller * _controller;
     Renderer * _renderer;
     SDL_Texture * playerTexture;
     SDL_Texture * bulletTexture;

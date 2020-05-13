@@ -8,21 +8,21 @@ void Game::Run(Controller controller, Renderer renderer)
     Uint32 frame_end;
     Uint32 frame_duration;
 
+    // Initialize Player
+    _player = new Player(100, 100, playerTexture);
+    // Initialize Starfield background
+    Starfield * starfield = new Starfield();
+
+    _renderer = &renderer;
+    _controller = &controller;
+
     // Initialize Textures
     char * playerTexturePath = (char *)"../gfx/player.png";
     char * bulletTexturePath = (char *)"../gfx/playerBullet.png";
     char * asteroidTexturePath = (char *)"../gfx/asteroid.png";
-    playerTexture = renderer.LoadTexture(playerTexturePath);
-    bulletTexture = renderer.LoadTexture(bulletTexturePath);
-    asteroidTexture = renderer.LoadTexture(asteroidTexturePath);
-
-    // Initialize Starfield background
-    Starfield * starfield = new Starfield();
-
-    // Initialize Player
-    _player = new Player(100, 100, playerTexture);
-    _renderer = &renderer;
-    _controller = &controller;
+    playerTexture = _renderer->LoadTexture(playerTexturePath);
+    bulletTexture = _renderer->LoadTexture(bulletTexturePath);
+    asteroidTexture = _renderer->LoadTexture(asteroidTexturePath);
 
     // Initialize Game settings
     gameOver = false;
