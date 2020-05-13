@@ -1,3 +1,0 @@
-/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/rebuild_cache.dir
-/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/AsteroidShooter.dir
-/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/edit_cache.dir
