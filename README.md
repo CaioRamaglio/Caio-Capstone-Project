@@ -92,6 +92,7 @@ Loop, Function, I/O
   * there are many examples throughout the project, the execution of class Game is split into many function being called by `Game::Run()` defined in game.cpp line 4.
 * The project accepts user input and processes the input.
   * in controller.cpp, the function `Controller::Input()` defined on line 11 calls the function `SDL_PollEvent()` which queries user input to determine its type. Based on this information we can direct the program to perform specific actions.
+
 Object Oriented Programming
 * The project uses Object Oriented Programming techniques.
   * the whole project is built around classes. the files player.h and player.cpp declare and implement two classes Player and Bullet.
@@ -99,9 +100,11 @@ Object Oriented Programming
   * again player.h is a good example of the use of access specifiers in the declaration of class Player.
 * Class constructors utilize member initialization lists.
   * In player.cpp, the constructors for class Player and class Bullet make use of initilization lists on lines 7 and 57 respectively
+
 Memory Management
 * The project uses smart pointers instead of raw pointers.
   * game.h declares shared pointers to Player, Starfield and multiple Asteroids in a list on lines 25, 26 and 32 respectively
+  
 Concurrency
 * The project uses multithreading.
   * In player.cpp on line 62, the constructor for Bullet launches a new task using the function `Bullet::Move()`
