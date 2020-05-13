@@ -6,8 +6,8 @@
 int main() {
     Controller controller;
     Game game;
-    Renderer renderer(::screenWidth, ::screenHeight); // Constructor initializes SDL
+    Renderer renderer(::screenWidth, ::screenHeight);
 
-    game.Run(controller, renderer); // main loop
+    game.Run(controller, renderer);
     return 0;
 }

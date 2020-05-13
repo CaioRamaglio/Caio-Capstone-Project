@@ -14,7 +14,6 @@ class Renderer;
 class Bullet{
   public:
     Bullet(float x, float y, SDL_Texture * texture);
-    ~Bullet();
     void Move();
     std::vector<float *> GetPosition();
     int GetWidth();
@@ -29,10 +28,6 @@ class Bullet{
     int _height;
     bool _alive;
     SDL_Texture * _texture;
-
-    bool hitSomething;
-    bool outOfBounds;
-
     std::vector<std::future<void>> ftrs;
     std::mutex mtx;
 };
@@ -54,6 +49,7 @@ class Player{
     void Move(float x, float y);
     void Fire(SDL_Texture * bulletTexture);
 
+    // Public Member Variable
     std::list<std::shared_ptr<Bullet>> bullets;
   private:
     // Private Member Variables

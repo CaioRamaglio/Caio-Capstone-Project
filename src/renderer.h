@@ -5,6 +5,7 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "starfield.h"
 
 class Renderer {
  public:
@@ -15,6 +16,8 @@ class Renderer {
   void PresentScene();
   SDL_Texture * LoadTexture(char * filename);
   void Blit(SDL_Texture * texture, float * x, float * y);
+  void DrawBackground(Starfield * starfield);
+  void UpdateWindowTitle(int score);
 
  private:
   SDL_Renderer *sdl_renderer;

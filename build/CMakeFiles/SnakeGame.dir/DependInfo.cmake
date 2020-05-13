@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/main.cpp" "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/SnakeGame.dir/src/main.cpp.o"
   "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/player.cpp" "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/SnakeGame.dir/src/player.cpp.o"
   "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.cpp" "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/SnakeGame.dir/src/renderer.cpp.o"
+  "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/starfield.cpp" "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/SnakeGame.dir/src/starfield.cpp.o"
   "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/test.cpp" "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles/SnakeGame.dir/src/test.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

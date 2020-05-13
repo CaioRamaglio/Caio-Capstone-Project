@@ -4,12 +4,10 @@
 ///////////////////////////
 /* Player Implementation */
 ///////////////////////////
-Player::Player(float x, float y, SDL_Texture * texture){
-    _x = x;
-    _y = y;
-    _width = 40;
+Player::Player(float x, float y, SDL_Texture * texture) 
+    : _x(x), _y(y), _texture(texture){
+    _width = 35;
     _height = 48;
-    _texture = texture;
     _health = 1;
 }
 
@@ -56,18 +54,12 @@ void Player::Fire(SDL_Texture * bulletTexture){
 ///////////////////////////
 /* Bullet Implementation */
 ///////////////////////////
-Bullet::Bullet(float x, float y, SDL_Texture * texture){
-    _x = x;
-    _y = y;
+Bullet::Bullet(float x, float y, SDL_Texture * texture)
+    : _x(x), _y(y), _texture(texture){
     _width = 9;
     _height = 26;
     _alive = true;
-    _texture = texture;
     ftrs.emplace_back(std::async(std::launch::async, &Bullet::Move, this));
-}
-
-Bullet::~Bullet(){
-    std::cout << "bullet destructor" << std::endl;
 }
 
 void Bullet::Move(){

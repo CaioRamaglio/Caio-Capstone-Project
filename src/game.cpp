@@ -3,6 +3,7 @@
 
 void Game::Run(Controller controller, Renderer renderer)
 {
+    // Time control variables
     Uint32 frame_start;
     Uint32 frame_end;
     Uint32 frame_duration;
@@ -10,32 +11,32 @@ void Game::Run(Controller controller, Renderer renderer)
     // Initialize Textures
     char * playerTexturePath = (char *)"../gfx/player.png";
     char * bulletTexturePath = (char *)"../gfx/playerBullet.png";
-    char * enemyTexturePath = (char *)"../gfx/asteroid.png";
+    char * asteroidTexturePath = (char *)"../gfx/asteroid.png";
     playerTexture = renderer.LoadTexture(playerTexturePath);
     bulletTexture = renderer.LoadTexture(bulletTexturePath);
-    enemyTexture = renderer.LoadTexture(enemyTexturePath);
+    asteroidTexture = renderer.LoadTexture(asteroidTexturePath);
+
+    // Initialize Starfield background
+    Starfield * starfield = new Starfield();
 
     // Initialize Player
-    Player * player = new Player(100, 100, playerTexture);
+    _player = new Player(100, 100, playerTexture);
+    _renderer = &renderer;
+    _controller = &controller;
 
-    // Initialize Enemy Spawn Timer && Difficulty
+    // Initialize Game settings
+    gameOver = false;
     spawnTimer = 180;
     difficultyLevel = 1;
     difficultyMultiplier = 1;
+    score = 0;
     
-    // main game loop
+    // Main Game Loop
     while(true){
         frame_start = SDL_GetTicks();
         
         // check for game over
-        if(gameOver){
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            delete player;
-            renderer.PrepareScene();
-            // display score
-            renderer.PresentScene();
-            break;
-        }
+        if(GameOver(starfield)){ break; }
 
         // clear the previous render
         renderer.PrepareScene();
@@ -44,39 +45,37 @@ void Game::Run(Controller controller, Renderer renderer)
         controller.Input();
 
         // game logic
-        PlayerLogic(&controller, player);
-        SpawnEnemies();
-        ClearBulletsAndEnemies(player);
-
-        //check collisions
-        for(auto e : enemies){
-            e->PlayerCollision(player);
-            for(auto b : player->bullets){
-                e->BulletCollision(b.get());
-            }
-        }
+        starfield->MoveStars();
+        PlayerLogic();
+        ClearBulletsAndAsteroids();
+        SpawnAsteroids();
+        CheckCollisions();
 
         // rendering
+        // render background
+        renderer.DrawBackground(starfield);
+
         // render player
-        std::vector<float *> playerPosition = player->GetPosition();
-        renderer.Blit(player->GetTexture(), playerPosition[0], playerPosition[1]);
+        std::vector<float *> _playerPosition = _player->GetPosition();
+        renderer.Blit(_player->GetTexture(), _playerPosition[0], _playerPosition[1]);
 
         // render bullets
-        if(player->bullets.size() > 0){
-            for(auto b : player->bullets){
+        if(_player->bullets.size() > 0){
+            for(auto b : _player->bullets){
                 renderer.Blit(b->GetTexture(), b->GetPosition()[0], b->GetPosition()[1]);
             }
         }
 
-        // render enemies
-        if(enemies.size() > 0){
-            for(auto e : enemies){
-                renderer.Blit(e->GetTexture(), e->GetPosition()[0], e->GetPosition()[1]);
+        // render asteroids
+        if(asteroids.size() > 0){
+            for(auto a : asteroids){
+                renderer.Blit(a->GetTexture(), a->GetPosition()[0], a->GetPosition()[1]);
             }
         }
 
         // display everything to the screen
         renderer.PresentScene();
+        renderer.UpdateWindowTitle(score);
 
         // time control
         frame_end = SDL_GetTicks();
@@ -87,74 +86,50 @@ void Game::Run(Controller controller, Renderer renderer)
     }
 }
 
-void Game::PlayerLogic(Controller * controller, Player * player)
+void Game::PlayerLogic()
 {
     // check if player is still alive
-    if(player->GetHealth() == 0){
+    if(_player->GetHealth() == 0){
         gameOver = true;
     }
 
     // move player while clamping to the window boundaries
-    if(controller->up == true){
-        if(*player->GetPosition()[1] > 0){
-            player->Move(0, -4);
+    if(_controller->up == true){
+        if(*_player->GetPosition()[1] > 0){
+            _player->Move(0, -4);
         }else{
-            player->Move(0, 0);
+            _player->Move(0, 0);
         }
     }
-    if(controller->down == true){
-        if(*player->GetPosition()[1] < screenHeight - player->GetHeight()){
-            player->Move(0, 4);
+    if(_controller->down == true){
+        if(*_player->GetPosition()[1] < screenHeight - _player->GetHeight()){
+            _player->Move(0, 4);
         }else{
-            player->Move(0, 0);
+            _player->Move(0, 0);
         }
     }
-    if(controller->left == true){
-        if(*player->GetPosition()[0] > 0){
-            player->Move(-4, 0);
+    if(_controller->left == true){
+        if(*_player->GetPosition()[0] > 0){
+            _player->Move(-4, 0);
         }else{
-            player->Move(0, 0);
+            _player->Move(0, 0);
         }
     }
-    if(controller->right == true){
-        if(*player->GetPosition()[0] < screenWidth - player->GetWidth()){
-            player->Move(4, 0);
+    if(_controller->right == true){
+        if(*_player->GetPosition()[0] < screenWidth - _player->GetWidth()){
+            _player->Move(4, 0);
         }else{
-            player->Move(0, 0);
+            _player->Move(0, 0);
         }
     }
 
     // fire a bullet
-    if(controller->firing == true){
-        player->Fire(bulletTexture);
+    if(_controller->firing == true){
+        _player->Fire(bulletTexture);
     }
 }
 
-void Game::ClearBulletsAndEnemies(Player * player){
-    // this function destroys one bullet and one asteroid each frame
-    // but since two bullets/asteroids are never spawned in two consecutive
-    // frames, it functions almost identically
-
-    // clear bullets
-    std::list<std::shared_ptr<Bullet>>::iterator bIt;
-    for(bIt = player->bullets.begin(); bIt != player->bullets.end(); bIt++){
-        if((*bIt)->IsAlive() == false){
-            player->bullets.remove(*bIt);
-            break;
-        }
-    }
-
-    // clear enemies
-    std::list<std::shared_ptr<Enemy>>::iterator eIt;
-    for(eIt = enemies.begin(); eIt != enemies.end(); eIt++){
-        if((*eIt)->IsAlive() == false){
-            enemies.remove(*eIt);
-            break;
-        }
-    }
-}
-
-void Game::SpawnEnemies(){
+void Game::SpawnAsteroids(){
     std::random_device rd;
     std::mt19937 eng(rd());
     std::uniform_int_distribution<> spawnHeightDistr(0, ::screenHeight);
@@ -168,8 +143,8 @@ void Game::SpawnEnemies(){
     else{
         //level 1
         if(difficultyLevel == 1){
-            enemies.emplace_back(
-                new Enemy(::screenWidth, spawnHeightDistr(eng), enemyTexture)
+            asteroids.emplace_back(
+                new Asteroid(::screenWidth, spawnHeightDistr(eng), asteroidTexture)
             );
             spawnTimer = spawnTimerDistr(eng) * difficultyMultiplier;
             difficultyMultiplier -= 0.02;
@@ -181,8 +156,8 @@ void Game::SpawnEnemies(){
 
         //level 2
         if (difficultyLevel == 2){
-            enemies.emplace_back(
-                new Enemy(::screenWidth, spawnHeightDistr(eng), enemyTexture)
+            asteroids.emplace_back(
+                new Asteroid(::screenWidth, spawnHeightDistr(eng), asteroidTexture)
             );
             spawnTimer = (spawnTimerDistr(eng) * difficultyMultiplier) / 2;
             difficultyMultiplier -= 0.02;
@@ -194,11 +169,11 @@ void Game::SpawnEnemies(){
 
         //level 3
         if (difficultyLevel == 3){
-            enemies.emplace_back(
-                new Enemy(::screenWidth, spawnHeightDistr(eng), enemyTexture)
+            asteroids.emplace_back(
+                new Asteroid(::screenWidth, spawnHeightDistr(eng), asteroidTexture)
             );
-            enemies.emplace_back(
-                new Enemy(spawnWidthDistr(eng), ::screenHeight, enemyTexture, 0, -4)
+            asteroids.emplace_back(
+                new Asteroid(spawnWidthDistr(eng), ::screenHeight, asteroidTexture, 0, -4)
             );
             spawnTimer = (spawnTimerDistr(eng) * difficultyMultiplier) / 2;
             difficultyMultiplier -= 0.01;
@@ -210,22 +185,98 @@ void Game::SpawnEnemies(){
 
         //level 4
         if (difficultyLevel == 4){
-            enemies.emplace_back(
-                new Enemy(::screenWidth, spawnHeightDistr(eng), enemyTexture)
+            asteroids.emplace_back(
+                new Asteroid(::screenWidth, spawnHeightDistr(eng), asteroidTexture)
             );
-            enemies.emplace_back(
-                new Enemy(spawnHeightDistr(eng), ::screenHeight, enemyTexture, 
-                spawnDirectionDistr(eng), spawnDirectionDistr(eng))
+            asteroids.emplace_back(
+                new Asteroid(spawnWidthDistr(eng), ::screenHeight, asteroidTexture, 0, -4)
             );
-            enemies.emplace_back(
-                new Enemy(spawnHeightDistr(eng), 0, enemyTexture, 
+            asteroids.emplace_back(
+                new Asteroid(spawnWidthDistr(eng), -48, asteroidTexture, 
                 spawnDirectionDistr(eng), spawnDirectionDistr(eng))
             );
             spawnTimer = (spawnTimerDistr(eng) * difficultyMultiplier) / 2;
             difficultyMultiplier -= 0.01;
             if(difficultyMultiplier <= 0.5){
                 difficultyMultiplier = 1;
+                difficultyLevel = 5;
             }
         }
+
+        //level 5
+        if (difficultyLevel == 5){
+            asteroids.emplace_back(
+                new Asteroid(::screenWidth, spawnHeightDistr(eng), asteroidTexture)
+            );
+            asteroids.emplace_back(
+                new Asteroid(spawnWidthDistr(eng), ::screenHeight, asteroidTexture, 0, -4)
+            );
+            asteroids.emplace_back(
+                new Asteroid(spawnWidthDistr(eng), ::screenHeight, asteroidTexture, 
+                spawnDirectionDistr(eng), spawnDirectionDistr(eng))
+            );
+            asteroids.emplace_back(
+                new Asteroid(spawnWidthDistr(eng), -48, asteroidTexture, 
+                spawnDirectionDistr(eng), spawnDirectionDistr(eng))
+            );
+            spawnTimer = spawnTimerDistr(eng) / 2;
+        }
     }
+}
+
+void Game::ClearBulletsAndAsteroids(){
+    // this function destroys one bullet and one asteroid each frame
+    // but since two bullets/asteroids are never spawned in two consecutive
+    // frames, it functions almost identically
+
+    // clear bullets
+    std::list<std::shared_ptr<Bullet>>::iterator bIt;
+    for(bIt = _player->bullets.begin(); bIt != _player->bullets.end(); bIt++){
+        if((*bIt)->IsAlive() == false){
+            _player->bullets.remove(*bIt);
+            break;
+        }
+    }
+
+    // clear asteroids
+    std::list<std::shared_ptr<Asteroid>>::iterator eIt;
+    for(eIt = asteroids.begin(); eIt != asteroids.end(); eIt++){
+        if((*eIt)->IsAlive() == false){
+            if((*eIt)->hitByBullet){ score += 100; }
+            asteroids.remove(*eIt);
+            break;
+        }
+    }
+}
+
+void Game::CheckCollisions(){
+    for(auto a : asteroids){
+        a->PlayerCollision(_player);
+        for(auto b : _player->bullets){
+            a->BulletCollision(b.get());
+        }
+    }
+}
+
+bool Game::GameOver(Starfield * starfield){
+    if(gameOver){
+        for(auto a : asteroids){
+            a->Dies();
+        }
+       for(auto b : _player->bullets){
+            b->Dies();
+        }
+        while(asteroids.size() > 0 && _player->bullets.size() > 0){
+            ClearBulletsAndAsteroids();
+        }
+        delete _player;
+        delete starfield;
+
+        std::cout << "Game Over" << std::endl;
+        std::cout << "Your scored " << score << " points!" << std::endl;
+        std::cout << "You reached level " << difficultyLevel << " of difficulty" << std::endl;
+
+        return true;
+    }
+    return false;
 }

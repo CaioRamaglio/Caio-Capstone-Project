@@ -53,12 +53,12 @@ CMAKE_BINARY_DIR = "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/SnakeGame.dir/all
+all: CMakeFiles/AsteroidShooter.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/SnakeGame.dir/clean
+clean: CMakeFiles/AsteroidShooter.dir/clean
 
 .PHONY : clean
 
@@ -68,31 +68,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/SnakeGame.dir
+# Target rules for target CMakeFiles/AsteroidShooter.dir
 
 # All Build rule for target.
-CMakeFiles/SnakeGame.dir/all:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/depend
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles" --progress-num=1,2,3,4,5,6,7,8 "Built target SnakeGame"
-.PHONY : CMakeFiles/SnakeGame.dir/all
+CMakeFiles/AsteroidShooter.dir/all:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/depend
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9 "Built target AsteroidShooter"
+.PHONY : CMakeFiles/AsteroidShooter.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/SnakeGame.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles" 8
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/SnakeGame.dir/all
+CMakeFiles/AsteroidShooter.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles" 9
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/AsteroidShooter.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/build/CMakeFiles" 0
-.PHONY : CMakeFiles/SnakeGame.dir/rule
+.PHONY : CMakeFiles/AsteroidShooter.dir/rule
 
 # Convenience name for target.
-SnakeGame: CMakeFiles/SnakeGame.dir/rule
+AsteroidShooter: CMakeFiles/AsteroidShooter.dir/rule
 
-.PHONY : SnakeGame
+.PHONY : AsteroidShooter
 
 # clean rule for target.
-CMakeFiles/SnakeGame.dir/clean:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/clean
-.PHONY : CMakeFiles/SnakeGame.dir/clean
+CMakeFiles/AsteroidShooter.dir/clean:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/clean
+.PHONY : CMakeFiles/AsteroidShooter.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

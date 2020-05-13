@@ -111,17 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named SnakeGame
+# Target rules for targets named AsteroidShooter
 
 # Build rule for target.
-SnakeGame: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 SnakeGame
-.PHONY : SnakeGame
+AsteroidShooter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 AsteroidShooter
+.PHONY : AsteroidShooter
 
 # fast build rule for target.
-SnakeGame/fast:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/build
-.PHONY : SnakeGame/fast
+AsteroidShooter/fast:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/build
+.PHONY : AsteroidShooter/fast
+
+src/asteroid.o: src/asteroid.cpp.o
+
+.PHONY : src/asteroid.o
+
+# target to build an object file
+src/asteroid.cpp.o:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/asteroid.cpp.o
+.PHONY : src/asteroid.cpp.o
+
+src/asteroid.i: src/asteroid.cpp.i
+
+.PHONY : src/asteroid.i
+
+# target to preprocess a source file
+src/asteroid.cpp.i:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/asteroid.cpp.i
+.PHONY : src/asteroid.cpp.i
+
+src/asteroid.s: src/asteroid.cpp.s
+
+.PHONY : src/asteroid.s
+
+# target to generate assembly for a file
+src/asteroid.cpp.s:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/asteroid.cpp.s
+.PHONY : src/asteroid.cpp.s
 
 src/controller.o: src/controller.cpp.o
 
@@ -129,7 +156,7 @@ src/controller.o: src/controller.cpp.o
 
 # target to build an object file
 src/controller.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/controller.cpp.o
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/controller.cpp.o
 .PHONY : src/controller.cpp.o
 
 src/controller.i: src/controller.cpp.i
@@ -138,7 +165,7 @@ src/controller.i: src/controller.cpp.i
 
 # target to preprocess a source file
 src/controller.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/controller.cpp.i
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/controller.cpp.i
 .PHONY : src/controller.cpp.i
 
 src/controller.s: src/controller.cpp.s
@@ -147,35 +174,8 @@ src/controller.s: src/controller.cpp.s
 
 # target to generate assembly for a file
 src/controller.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/controller.cpp.s
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/controller.cpp.s
 .PHONY : src/controller.cpp.s
-
-src/enemy.o: src/enemy.cpp.o
-
-.PHONY : src/enemy.o
-
-# target to build an object file
-src/enemy.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/enemy.cpp.o
-.PHONY : src/enemy.cpp.o
-
-src/enemy.i: src/enemy.cpp.i
-
-.PHONY : src/enemy.i
-
-# target to preprocess a source file
-src/enemy.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/enemy.cpp.i
-.PHONY : src/enemy.cpp.i
-
-src/enemy.s: src/enemy.cpp.s
-
-.PHONY : src/enemy.s
-
-# target to generate assembly for a file
-src/enemy.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/enemy.cpp.s
-.PHONY : src/enemy.cpp.s
 
 src/game.o: src/game.cpp.o
 
@@ -183,7 +183,7 @@ src/game.o: src/game.cpp.o
 
 # target to build an object file
 src/game.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/game.cpp.o
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/game.cpp.o
 .PHONY : src/game.cpp.o
 
 src/game.i: src/game.cpp.i
@@ -192,7 +192,7 @@ src/game.i: src/game.cpp.i
 
 # target to preprocess a source file
 src/game.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/game.cpp.i
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/game.cpp.i
 .PHONY : src/game.cpp.i
 
 src/game.s: src/game.cpp.s
@@ -201,7 +201,7 @@ src/game.s: src/game.cpp.s
 
 # target to generate assembly for a file
 src/game.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/game.cpp.s
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/game.cpp.s
 .PHONY : src/game.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -210,7 +210,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -219,7 +219,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -228,7 +228,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 src/player.o: src/player.cpp.o
@@ -237,7 +237,7 @@ src/player.o: src/player.cpp.o
 
 # target to build an object file
 src/player.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/player.cpp.o
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/player.cpp.o
 .PHONY : src/player.cpp.o
 
 src/player.i: src/player.cpp.i
@@ -246,7 +246,7 @@ src/player.i: src/player.cpp.i
 
 # target to preprocess a source file
 src/player.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/player.cpp.i
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/player.cpp.i
 .PHONY : src/player.cpp.i
 
 src/player.s: src/player.cpp.s
@@ -255,7 +255,7 @@ src/player.s: src/player.cpp.s
 
 # target to generate assembly for a file
 src/player.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/player.cpp.s
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/player.cpp.s
 .PHONY : src/player.cpp.s
 
 src/renderer.o: src/renderer.cpp.o
@@ -264,7 +264,7 @@ src/renderer.o: src/renderer.cpp.o
 
 # target to build an object file
 src/renderer.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/renderer.cpp.o
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/renderer.cpp.o
 .PHONY : src/renderer.cpp.o
 
 src/renderer.i: src/renderer.cpp.i
@@ -273,7 +273,7 @@ src/renderer.i: src/renderer.cpp.i
 
 # target to preprocess a source file
 src/renderer.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/renderer.cpp.i
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/renderer.cpp.i
 .PHONY : src/renderer.cpp.i
 
 src/renderer.s: src/renderer.cpp.s
@@ -282,8 +282,35 @@ src/renderer.s: src/renderer.cpp.s
 
 # target to generate assembly for a file
 src/renderer.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/renderer.cpp.s
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/renderer.cpp.s
 .PHONY : src/renderer.cpp.s
+
+src/starfield.o: src/starfield.cpp.o
+
+.PHONY : src/starfield.o
+
+# target to build an object file
+src/starfield.cpp.o:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/starfield.cpp.o
+.PHONY : src/starfield.cpp.o
+
+src/starfield.i: src/starfield.cpp.i
+
+.PHONY : src/starfield.i
+
+# target to preprocess a source file
+src/starfield.cpp.i:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/starfield.cpp.i
+.PHONY : src/starfield.cpp.i
+
+src/starfield.s: src/starfield.cpp.s
+
+.PHONY : src/starfield.s
+
+# target to generate assembly for a file
+src/starfield.cpp.s:
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/starfield.cpp.s
+.PHONY : src/starfield.cpp.s
 
 src/test.o: src/test.cpp.o
 
@@ -291,7 +318,7 @@ src/test.o: src/test.cpp.o
 
 # target to build an object file
 src/test.cpp.o:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/test.cpp.o
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/test.cpp.o
 .PHONY : src/test.cpp.o
 
 src/test.i: src/test.cpp.i
@@ -300,7 +327,7 @@ src/test.i: src/test.cpp.i
 
 # target to preprocess a source file
 src/test.cpp.i:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/test.cpp.i
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/test.cpp.i
 .PHONY : src/test.cpp.i
 
 src/test.s: src/test.cpp.s
@@ -309,7 +336,7 @@ src/test.s: src/test.cpp.s
 
 # target to generate assembly for a file
 src/test.cpp.s:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/src/test.cpp.s
+	$(MAKE) -f CMakeFiles/AsteroidShooter.dir/build.make CMakeFiles/AsteroidShooter.dir/src/test.cpp.s
 .PHONY : src/test.cpp.s
 
 # Help Target
@@ -319,14 +346,14 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... SnakeGame"
+	@echo "... AsteroidShooter"
 	@echo "... edit_cache"
+	@echo "... src/asteroid.o"
+	@echo "... src/asteroid.i"
+	@echo "... src/asteroid.s"
 	@echo "... src/controller.o"
 	@echo "... src/controller.i"
 	@echo "... src/controller.s"
-	@echo "... src/enemy.o"
-	@echo "... src/enemy.i"
-	@echo "... src/enemy.s"
 	@echo "... src/game.o"
 	@echo "... src/game.i"
 	@echo "... src/game.s"
@@ -339,6 +366,9 @@ help:
 	@echo "... src/renderer.o"
 	@echo "... src/renderer.i"
 	@echo "... src/renderer.s"
+	@echo "... src/starfield.o"
+	@echo "... src/starfield.i"
+	@echo "... src/starfield.s"
 	@echo "... src/test.o"
 	@echo "... src/test.i"
 	@echo "... src/test.s"

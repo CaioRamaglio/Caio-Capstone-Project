@@ -14,6 +14,6 @@ include_directories(${SDL2_INCLUDE_DIRS} src)
 
 file(GLOB project_SRCS src/*.cpp) #src/*.h
 
-add_executable(SnakeGame ${project_SRCS})
+add_executable(AsteroidShooter ${project_SRCS})
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-target_link_libraries(SnakeGame ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+target_link_libraries(AsteroidShooter ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})

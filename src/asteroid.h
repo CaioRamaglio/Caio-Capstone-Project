@@ -1,5 +1,5 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef ASTEROID_H
+#define ASTEROID_H
 
 #include <iostream>
 #include <vector>
@@ -9,12 +9,12 @@
 #include "renderer.h"
 #include "player.h"
 
-class Enemy{
+class Asteroid{
   public:
     // Constructor
-    Enemy(float x, float y, SDL_Texture * texture);
-    Enemy(float x, float y, SDL_Texture * texture, float dirX, float dirY);
-    ~Enemy();
+    Asteroid(float x, float y, SDL_Texture * texture);
+    Asteroid(float x, float y, SDL_Texture * texture, float dirX, float dirY);
+    //~Asteroid();
     
     // Getters/Setters
     std::vector<float *> GetPosition();
@@ -27,6 +27,9 @@ class Enemy{
     void PlayerCollision(Player * p);
     void BulletCollision(Bullet * b);
 
+    // Public Member Variable
+    bool hitByBullet;
+
   private:
     // Private Member Variables
     float _x;
@@ -35,7 +38,6 @@ class Enemy{
     int _height;
     bool _alive;
     SDL_Texture * _texture;
-
     std::vector<std::future<void>> ftrs;
     std::mutex mtx;
 };

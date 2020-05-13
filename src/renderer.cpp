@@ -25,13 +25,15 @@ Renderer::Renderer(const std::size_t screen_width, const std::size_t screen_heig
         std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
     }
 
+    // Hide cursor
+    SDL_ShowCursor(0); 
+
     // Initialize use of PNGs and JPGs for sprites
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 }
 
 Renderer::~Renderer() 
 {
-    std::cout << "renderer destroyed" << std::endl;
     SDL_DestroyWindow(sdl_window);
     SDL_Quit();
 }
@@ -39,7 +41,7 @@ Renderer::~Renderer()
 void Renderer::PrepareScene() 
 {
     // Clear screen
-    SDL_SetRenderDrawColor(sdl_renderer, 30, 30, 30, 255);
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
 }
 
@@ -63,4 +65,22 @@ void Renderer::Blit(SDL_Texture * texture, float * x, float * y)
 
 	SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
 	SDL_RenderCopy(sdl_renderer, texture, NULL, &dest);
+}
+
+void Renderer::DrawBackground(Starfield * starfield){
+	for (auto s : starfield->stars)
+	{
+		int c = 32 * s->GetSpeed();
+        int x = s->GetPosition()[0];
+        int y = s->GetPosition()[1];
+		
+		SDL_SetRenderDrawColor(sdl_renderer, c, c, c, 255);
+		
+		SDL_RenderDrawLine(sdl_renderer, x, y, x + 3, y);
+	}
+}
+
+void Renderer::UpdateWindowTitle(int score) {
+  std::string title{"ASTEROID SHOOTER                         Score: " + std::to_string(score)};
+  SDL_SetWindowTitle(sdl_window, title.c_str());
 }

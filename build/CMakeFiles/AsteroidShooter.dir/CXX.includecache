@@ -6,9 +6,109 @@
 
 #IncludeRegexTransform: 
 
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/asteroid.cpp
+asteroid.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/asteroid.h
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/asteroid.h
+iostream
+-
+vector
+-
+memory
+-
+future
+-
+SDL.h
+-
+renderer.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.h
+player.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/player.h
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/controller.h
+SDL.h
+-
+vector
+-
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/game.cpp
+game.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/game.h
+iostream
+-
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/game.h
+list
+-
+memory
+-
+random
+-
+SDL.h
+-
+controller.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/controller.h
+renderer.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.h
+player.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/player.h
+asteroid.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/asteroid.h
+starfield.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/starfield.h
+
 /home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/globals.h
 SDL.h
 -
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/main.cpp
+iostream
+-
+controller.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/controller.h
+game.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/game.h
+renderer.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.h
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/player.cpp
+player.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/player.h
+iostream
+-
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/player.h
+vector
+-
+list
+-
+memory
+-
+future
+-
+SDL.h
+-
+globals.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/globals.h
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.cpp
+renderer.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.h
+iostream
+-
+
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/renderer.h
+vector
+-
+string
+-
+SDL.h
+-
+SDL_image.h
+-
+starfield.h
+/home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/starfield.h
 
 /home/caio/Desktop/Udacity Stuff/Caio-Capstone-Project/src/starfield.cpp
 starfield.h
@@ -267,6 +367,16 @@ close_code.h
 /usr/include/SDL2/SDL_hints.h
 SDL_stdinc.h
 /usr/include/SDL2/SDL_stdinc.h
+begin_code.h
+/usr/include/SDL2/begin_code.h
+close_code.h
+/usr/include/SDL2/close_code.h
+
+/usr/include/SDL2/SDL_image.h
+SDL.h
+/usr/include/SDL2/SDL.h
+SDL_version.h
+/usr/include/SDL2/SDL_version.h
 begin_code.h
 /usr/include/SDL2/begin_code.h
 close_code.h

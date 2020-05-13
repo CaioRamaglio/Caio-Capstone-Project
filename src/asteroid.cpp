@@ -1,53 +1,57 @@
-#include "enemy.h"
+#include "asteroid.h"
 
-Enemy::Enemy(float x, float y, SDL_Texture * texture){
-    _x = x;
-    _y = y;
+Asteroid::Asteroid(float x, float y, SDL_Texture * texture)
+    : _x(x), _y(y), _texture(texture){
     _width = _height = 48; 
-    _texture = texture;
     _alive = true;
-    ftrs.emplace_back(std::async(std::launch::async, &Enemy::Move, this, -4, 0));
+    hitByBullet = false;
+    ftrs.emplace_back(std::async(std::launch::async, &Asteroid::Move, this, -4, 0));
 }
 
-Enemy::Enemy(float x, float y, SDL_Texture * texture, float dirX, float dirY){
-    _x = x;
-    _y = y;
+Asteroid::Asteroid(float x, float y, SDL_Texture * texture, float dirX, float dirY)
+    : _x(x), _y(y), _texture(texture){
+    
+    // set default asteroid behavior to avoid a parked asteroid
+    if(dirX == 0 && dirY == 0){ 
+        dirX = -4;
+    }
+
     _width = _height = 48; 
-    _texture = texture;
     _alive = true;
-    ftrs.emplace_back(std::async(std::launch::async, &Enemy::Move, this, dirX, dirY));
+    hitByBullet = false;
+    ftrs.emplace_back(std::async(std::launch::async, &Asteroid::Move, this, dirX, dirY));
 }
 
-Enemy::~Enemy(){
+/*Asteroid::~Asteroid(){
     std::cout << "Asteroid destructor" << std::endl;
-}
+}*/
 
-std::vector<float *> Enemy::GetPosition(){
+std::vector<float *> Asteroid::GetPosition(){
     std::vector<float *> position{&_x, &_y};
     return position;
 }
 
-bool Enemy::IsAlive(){
+bool Asteroid::IsAlive(){
     return _alive;
 }
 
-void Enemy::Dies(){
+void Asteroid::Dies(){
     _alive = false;
 }
 
-SDL_Texture * Enemy::GetTexture(){
+SDL_Texture * Asteroid::GetTexture(){
     return _texture;
 }
 
-void Enemy::Move(float x, float y){
+void Asteroid::Move(float x, float y){
     std::lock_guard lock(mtx);
     while(true){
         if (_alive == false){ break; }
-        
+
         std::this_thread::sleep_for(std::chrono::milliseconds(16));
         _x += x;
         _y += y;
-        if (_x < 0 || _y < 0 || 
+        if (_x < -_width || _y < -_height || 
             _x > ::screenWidth || _y > ::screenHeight)
         {
             _alive = false;
@@ -56,7 +60,7 @@ void Enemy::Move(float x, float y){
     }
 }
 
-void Enemy::PlayerCollision(Player * p){
+void Asteroid::PlayerCollision(Player * p){
     float playerX = *p->GetPosition()[0];
     float playerY = *p->GetPosition()[1];
     
@@ -71,11 +75,10 @@ void Enemy::PlayerCollision(Player * p){
     if(maxX < minX && maxY < minY){
         this->Dies();
         p->SetHealth(0);
-        std::cout << "player collision" << std::endl;
     }
 }
 
-void Enemy::BulletCollision(Bullet * b){
+void Asteroid::BulletCollision(Bullet * b){
     float bulletX = *b->GetPosition()[0];
     float bulletY = *b->GetPosition()[1];
 
@@ -88,7 +91,7 @@ void Enemy::BulletCollision(Bullet * b){
         _y + _height : bulletY + b->GetHeight();
 
     if(maxX < minX && maxY < minY){
-        std::cout << "bullet collision" << std::endl;
+        hitByBullet = true;
         b->Dies();
         this->Dies();
     }
