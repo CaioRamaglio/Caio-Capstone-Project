@@ -13,7 +13,6 @@ class Asteroid{
     // Constructor
     Asteroid(float x, float y, SDL_Texture * texture);
     Asteroid(float x, float y, SDL_Texture * texture, float dirX, float dirY);
-    //~Asteroid();
     
     // Getters/Setters
     std::vector<float *> GetPosition();

@@ -22,10 +22,6 @@ Asteroid::Asteroid(float x, float y, SDL_Texture * texture, float dirX, float di
     ftrs.emplace_back(std::async(std::launch::async, &Asteroid::Move, this, dirX, dirY));
 }
 
-/*Asteroid::~Asteroid(){
-    std::cout << "Asteroid destructor" << std::endl;
-}*/
-
 std::vector<float *> Asteroid::GetPosition(){
     std::vector<float *> position{&_x, &_y};
     return position;

@@ -3,18 +3,13 @@
 
 void Game::Run(Controller controller, Renderer renderer)
 {
+    _renderer = &renderer;
+    _controller = &controller;
+
     // Time control variables
     Uint32 frame_start;
     Uint32 frame_end;
     Uint32 frame_duration;
-
-    // Initialize Player
-    _player = new Player(100, 100, playerTexture);
-    // Initialize Starfield background
-    Starfield * starfield = new Starfield();
-
-    _renderer = &renderer;
-    _controller = &controller;
 
     // Initialize Textures
     char * playerTexturePath = (char *)"../gfx/player.png";
@@ -24,58 +19,43 @@ void Game::Run(Controller controller, Renderer renderer)
     bulletTexture = _renderer->LoadTexture(bulletTexturePath);
     asteroidTexture = _renderer->LoadTexture(asteroidTexturePath);
 
+    // Initialize Player and background
+    _player = std::make_shared<Player>(100, 100, playerTexture);
+    _starfield = std::make_shared<Starfield>();
+
     // Initialize Game settings
     gameOver = false;
+    score = 0;
     spawnTimer = 180;
     difficultyLevel = 1;
     difficultyMultiplier = 1;
-    score = 0;
     
     // Main Game Loop
     while(true){
         frame_start = SDL_GetTicks();
         
         // check for game over
-        if(GameOver(starfield)){ break; }
+        if(GameOver()){ break; }
 
         // clear the previous render
-        renderer.PrepareScene();
+        _renderer->PrepareScene();
 
         // check player input
-        controller.Input();
+        _controller->Input();
 
         // game logic
-        starfield->MoveStars();
+        _starfield->MoveStars();
         PlayerLogic();
-        ClearBulletsAndAsteroids();
         SpawnAsteroids();
+        ClearBulletsAndAsteroids();
         CheckCollisions();
 
         // rendering
-        // render background
-        renderer.DrawBackground(starfield);
-
-        // render player
-        std::vector<float *> _playerPosition = _player->GetPosition();
-        renderer.Blit(_player->GetTexture(), _playerPosition[0], _playerPosition[1]);
-
-        // render bullets
-        if(_player->bullets.size() > 0){
-            for(auto b : _player->bullets){
-                renderer.Blit(b->GetTexture(), b->GetPosition()[0], b->GetPosition()[1]);
-            }
-        }
-
-        // render asteroids
-        if(asteroids.size() > 0){
-            for(auto a : asteroids){
-                renderer.Blit(a->GetTexture(), a->GetPosition()[0], a->GetPosition()[1]);
-            }
-        }
+        Render();
 
         // display everything to the screen
-        renderer.PresentScene();
-        renderer.UpdateWindowTitle(score);
+        _renderer->PresentScene();
+        _renderer->UpdateWindowTitle(score);
 
         // time control
         frame_end = SDL_GetTicks();
@@ -148,7 +128,7 @@ void Game::SpawnAsteroids(){
             );
             spawnTimer = spawnTimerDistr(eng) * difficultyMultiplier;
             difficultyMultiplier -= 0.02;
-            if(difficultyMultiplier <= 0.9){
+            if(difficultyMultiplier <= 0.8){
                 difficultyMultiplier = 1;
                 difficultyLevel = 2;
             }
@@ -161,7 +141,7 @@ void Game::SpawnAsteroids(){
             );
             spawnTimer = (spawnTimerDistr(eng) * difficultyMultiplier) / 2;
             difficultyMultiplier -= 0.02;
-            if(difficultyMultiplier <= 0.9){
+            if(difficultyMultiplier <= 0.6){
                 difficultyMultiplier = 1;
                 difficultyLevel = 3;
             }
@@ -239,11 +219,11 @@ void Game::ClearBulletsAndAsteroids(){
     }
 
     // clear asteroids
-    std::list<std::shared_ptr<Asteroid>>::iterator eIt;
-    for(eIt = asteroids.begin(); eIt != asteroids.end(); eIt++){
-        if((*eIt)->IsAlive() == false){
-            if((*eIt)->hitByBullet){ score += 100; }
-            asteroids.remove(*eIt);
+    std::list<std::shared_ptr<Asteroid>>::iterator aIt;
+    for(aIt = asteroids.begin(); aIt != asteroids.end(); aIt++){
+        if((*aIt)->IsAlive() == false){
+            if((*aIt)->hitByBullet){ score += 100; }
+            asteroids.remove(*aIt);
             break;
         }
     }
@@ -251,14 +231,37 @@ void Game::ClearBulletsAndAsteroids(){
 
 void Game::CheckCollisions(){
     for(auto a : asteroids){
-        a->PlayerCollision(_player);
+        a->PlayerCollision(_player.get());
         for(auto b : _player->bullets){
             a->BulletCollision(b.get());
         }
     }
 }
 
-bool Game::GameOver(Starfield * starfield){
+void Game::Render(){
+    // render background
+    _renderer->DrawBackground(_starfield.get());
+
+    // render player
+    std::vector<float *> _playerPosition = _player->GetPosition();
+    _renderer->Blit(_player->GetTexture(), _playerPosition[0], _playerPosition[1]);
+
+    // render bullets
+    if(_player->bullets.size() > 0){
+        for(auto b : _player->bullets){
+            _renderer->Blit(b->GetTexture(), b->GetPosition()[0], b->GetPosition()[1]);
+        }
+    }
+
+    // render asteroids
+    if(asteroids.size() > 0){
+        for(auto a : asteroids){
+            _renderer->Blit(a->GetTexture(), a->GetPosition()[0], a->GetPosition()[1]);
+        }
+    }
+}
+
+bool Game::GameOver(){
     if(gameOver){
         for(auto a : asteroids){
             a->Dies();
@@ -269,8 +272,6 @@ bool Game::GameOver(Starfield * starfield){
         while(asteroids.size() > 0 && _player->bullets.size() > 0){
             ClearBulletsAndAsteroids();
         }
-        delete _player;
-        delete starfield;
 
         std::cout << "Game Over" << std::endl;
         std::cout << "Your scored " << score << " points!" << std::endl;

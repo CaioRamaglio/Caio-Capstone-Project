@@ -18,11 +18,12 @@ class Game{
     void ClearBulletsAndAsteroids();
     void SpawnAsteroids();
     void CheckCollisions();
-    bool GameOver(Starfield * starfield);
+    void Render();
+    bool GameOver();
 
   private:
-    Player * _player;
-    Starfield * _starfield;
+    std::shared_ptr<Player>  _player;
+    std::shared_ptr<Starfield> _starfield;
     Controller * _controller;
     Renderer * _renderer;
     SDL_Texture * playerTexture;
