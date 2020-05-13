@@ -6,7 +6,6 @@
 #include <memory>
 #include <future>
 #include <SDL.h>
-#include "renderer.h"
 #include "player.h"
 
 class Asteroid{
